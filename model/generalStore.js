@@ -5,6 +5,8 @@ const generalStore = new Schema({
   id :{type:String , default:"" , required:false},
   name :{type:String , default:"" , required:true}, 
   status:{type:Number, default:0 , required:false},
+  phonenumber:{type:Number, default:0 , required:false},
+  address: {type:String, default:"" , required:false},
   createdBy:{type:String , default:"Admin" , required:false},
   updatedBy:{type:String , default:"Admin" , required:false}
 },

@@ -2,7 +2,7 @@ const express = require("express");
 const catchAsync = require("../utils/catchAsync");
 const cartproduct = require("../model/cartproduct");
 
-//get
+//GET
 const list_products = catchAsync(async (req, res) => {
   const values = req.query;
   query = {};

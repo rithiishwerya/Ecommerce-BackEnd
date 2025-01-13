@@ -9,13 +9,6 @@ const category = require('../model/category');
 
 //**************  CATEGORY  *************//
 
-
-    // responsejson.category = {
-        //   categoryId:each.category,
-        //   categoryName:categoryName,
-        //   subcategoryDetails:subcategoryDetails,
-        //   childcategoryDetails:childcategoryDetails
-        // };
 //POST
 const post_category = catchAsync(async (req, res) => {
   try{
@@ -27,7 +20,7 @@ const post_category = catchAsync(async (req, res) => {
       await categorys(values).save().then((result)=>{
       res.send({
         code: 200,
-        message: "role added",
+        message: "category added",
         data: result,
         success: true
       });

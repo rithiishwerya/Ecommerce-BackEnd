@@ -3,7 +3,7 @@ const express = require ('express')
 const cart = require ('../model/cart')
 const wishlist = require ('../model/wishlist');
 const compare = require ('../model/compare');
-const user = require ('../model/generalUsers');
+const User = require ('../model/user');
 const product = require('../model/product');
 const variantunit = require('../model/variantunit');
 const productController = require('../controller/product.controller');
@@ -41,19 +41,20 @@ const post_cart = catchAsync(async(req,res) => {
 //GET CART
 const get_cart = catchAsync(async(req,res)=>{
   let values = req.query;
+  let user = req.user
   query ={}
   try{
-    if (values.userId != null && values.userId != undefined && values.userId !=''){
-      query.userId = values.userId   
-    }
-    query.status = 0;
-    const getcart = await cart.find(query)
+    // if (values.userId != null && values.userId != undefined && values.userId !=''){
+    //   query.userId = values.userId   
+    // }
+    //query.status = 0;
+    const getcart = await cart.find({userId: user.id})
     const new_data1 = [];
     if (getcart && getcart.length >0){
       cartTotal = 0
       for (let each of getcart){
         responseJson = {};
-        let userId = await user.findOne({id:each.userId})
+        let userId = await User.findOne({id:each.userId})
         if (userId)
         {
           userName = userId.name
@@ -89,23 +90,6 @@ const get_cart = catchAsync(async(req,res)=>{
         responseJson.image = image
         new_data1.push(responseJson)
       }
-
-      // cartTotal ={}
-      // for (each of new_data1){
-      //   if (new_data1.userId){
-      //     cartTotal = each.userid
-      //     each.userid += each.sellingprice * each.quantity
-      //     new_data1.push(cartTotal)
-      //     console.log(cartTotal)
-      // }
-      // else{
-      //   res.send({
-      //     code :201,
-      //     message :'no cart items',
-      //     success:false
-      //   })      
-      // }
-      //}
        res.send ({
         code :200,
         message :'your cart items ',
@@ -188,18 +172,19 @@ const post_wishlist = catchAsync(async (req,res) => {
 //GET WISHLIST
 const get_wishlist= catchAsync(async(req,res)=>{
   let values = req.body;
+  let user = req.user
   query ={}
   try{
-    if (values.userId != null && values.userId != undefined && values.userId !=''){
-      query.userId = values.userId   
-    }
-    const getwishlist= await wishlist.find(query)
+    // if (values.userId != null && values.userId != undefined && values.userId !=''){
+    //   query.userId = values.userId   
+    // }
+    const getwishlist= await wishlist.find({userId: user.id})
     const new_data1 = [];
     if (getwishlist && getwishlist.length >0){
       for (let each of getwishlist){
         responseJson = {};
 
-        let userId = await user.findOne({id:each.userId})
+        let userId = await User.findOne({id:each.userId})
         if (userId)
         {
           userName = userId.name
@@ -278,8 +263,9 @@ const delete_wishlist= catchAsync(async(req,res) =>{
 const post_compare = catchAsync(async (req, res) => {
   try {
   let values = req.body; 
+  let user = req.user;
   if (values.userId != null && values.userId != undefined && values.userId !=''){
-    const query = { userId: values.userId };
+    const query = { userId: user.id };
     const users = await compare.countDocuments(query);
     if (users >= 3){
       res.send({
@@ -315,13 +301,14 @@ const post_compare = catchAsync(async (req, res) => {
 
 const get_compare= catchAsync(async(req,res)=>{
   let values = req.body;
+  let user = req.user;
   query ={}
 
   try{
-    if (values.userId != null && values.userId != undefined && values.userId !=''){
-      query.userId = values.userId   
-    }
-    const getcompare= await compare.find(query)
+    // if (values.userId != null && values.userId != undefined && values.userId !=''){
+    //   query.userId = values.userId   
+    // }
+    const getcompare= await compare.find({userId: user.id})
     const new_data1 = [];
     let variant = await productController.varinatdetails()
     if (getcompare && getcompare.length >0){
@@ -329,7 +316,7 @@ const get_compare= catchAsync(async(req,res)=>{
         responseJson = {};
         let productdetails = {}
 
-        let userId = await user.findOne({id:each.userId})
+        let userId = await User.findOne({id:each.userId})
         if (userId)
         {
           userName = userId.name

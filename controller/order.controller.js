@@ -10,11 +10,12 @@ const product = require('../model/product')
 //*************** ORDER *************
 
 //POST ORDER
-const post_order = catchAsync(async(req,res) =>{
+
+const checkout = catchAsync(async(req,res) =>{
   const values = req.body
   if (values.user_id != '' && values.user_id != undefined && values.user_id != null){
-    const carts = await cart.find({userId:values.user_id,status:0})
-    if(carts.length > 0){
+    const carts = await cart.find({ userId: values.user_id, status:0 })
+    if(carts.length > 0) {
       let orderjson = {}
       orderjson.order_id = "ORD"+ Math.floor(Math.random() * 1000000000)
       orderjson.user_id = values.user_id
@@ -62,6 +63,16 @@ const post_order = catchAsync(async(req,res) =>{
         orderAddressjson.email = values.email
         orderAddressjson.phone_number = values.phone_number
         orderAddressjson.alternate_contact_number = values.alternate_contact_number
+        orderAddressjson.address = [
+          {
+            address1: values.address1,
+            address2: values.address2,
+            landmark: values.landmark,
+            city: values.city,
+            state: values.state,
+            pincode: values.pincode
+          }
+        ],
         orderAddressjson.address1 = values.address1
         orderAddressjson.address2 = values.address2
         orderAddressjson.landmark = values.landmark
@@ -92,7 +103,10 @@ const post_order = catchAsync(async(req,res) =>{
     }
   })
   
+
+  
 //GET ORDER
+
 const get_order = catchAsync(async(req,res)=>{
   const values = req.body
   query={}
@@ -117,5 +131,5 @@ const get_order = catchAsync(async(req,res)=>{
   }
 })
 
-module.exports = {post_order }
+module.exports = {checkout, get_order }
               

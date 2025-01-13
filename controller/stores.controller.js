@@ -1,7 +1,6 @@
 const express = require('express');   
 const catchAsync = require('../utils/catchAsync');
 const stores = require('../model/generalStore');
-const quesAns = require('../model/qa');
 
 const Post_Data= catchAsync(async (req, res) => {
     let values=req.body;
@@ -126,48 +125,5 @@ const Delete_Data = catchAsync(async(req,res) =>{
 })
 });
 
-//QUES ANSWER
-const ques_ans = catchAsync(async(req,res) =>{
-    try{
-        const results = await qa.find();
-        res.send(results);
-    }catch(error){
-        send.res({
-            code:201,
-            message:'no data',
-            success:false
-        })
-    }
 
-});
-
-const post_data = catchAsync(async(req,res)=>{
-    try{
-    const values = req.body;
-    let query = {}
-    if(values.id != null && values.id != undefined && values.id !=''){
-        await data(values).save().then((result)=>{
-            res.send({
-                code:200,
-                success:true,
-                message:'code saved!',
-                data:result
-            })
-
-        })
-    } else{
-    res.send({
-        code:200,
-        message:'data saved',
-        success:true
-     })
-    }
-    }catch{
-        res.send({
-            code:201,
-            message:'no data',
-            success:false
-        })
-    }
-})
-module.exports = {Post_Data,Get_Data,Patch_Data,Delete_Data,ques_ans};
+module.exports = {Post_Data,Get_Data,Patch_Data,Delete_Data};

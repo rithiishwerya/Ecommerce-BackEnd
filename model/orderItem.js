@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 const orderItem = new Schema ({
   id: {type:String ,default:'' ,required:false},
   order_id: {type:String ,default:'' ,required:false},
+  user_id: {type:String ,default:'' ,required:false},
   orderItem:
   [
     {
       id: {type:String ,default:'' ,required:false},
-      user_id: {type:String ,default:'' ,required:false},
       product_id: {type:String ,default:'' ,required:false},
       variant_id: {type:String ,default:'' ,required:false},
       quantity: {type:Number ,default:0 ,required:false},

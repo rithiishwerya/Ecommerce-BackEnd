@@ -509,4 +509,4 @@ const products = catchAsync(async(req,res)=>{
 
 
 module.exports = {post_product , UpdateProductImages , VariantProduct , update_product , Update_variant , delete_product,
- delete_variant , delete_image , products,varinatdetails}
+                  delete_variant , delete_image , products,varinatdetails}

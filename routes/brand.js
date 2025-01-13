@@ -2,34 +2,25 @@ const express = require("express");
 const router = express.Router();
 const brandController = require("../controller/brand.controller");
 const image = require("../services/imageUpload");
+const Auth = require("../middleware/auth");
 
-const auth = require("../middleware/auth");
-//BRAND
+router.post("/addbrand",Auth.AuthAdmin, image.imageUpload.single("image"), brandController.post_brand);
 
-router.post("/addbrand",
-  image.imageUpload.single("image"),
-  brandController.post_brand
-);
+router.get("/listbrand", Auth.AuthAdmin, brandController.get_brand);
 
-router.get("/listbrand", auth.AuthAdmin, brandController.get_brand);
-
-router.put(
-  "/updatebrand/:id",
-  image.imageUpload.single("image"),
-  brandController.update_brand
-);
+router.put("/updatebrand/:id",Auth.AuthAdmin, image.imageUpload.single("image"),brandController.update_brand);
 
 //VARIANT UNIT
 
-router.post("/addvariant", brandController.post_variantUnit);
+router.post("/addvariant",Auth.AuthAdmin, brandController.post_variantUnit);
 
-router.get("/listvariant", brandController.get_variantUnit);
+router.get("/listvariant",Auth.AuthAdmin, brandController.get_variantUnit);
 
-router.put("/updatevariant/:id", brandController.update_variantUnit);
+router.put("/updatevariant/:id",Auth.AuthAdmin, brandController.update_variantUnit);
 
 //UNIT ONLY
-router.post("/addunit", brandController.AddUnit);
+router.post("/addunit",Auth.AuthAdmin, brandController.AddUnit);
 
-router.put("/updateunit/:id", brandController.UpdateUnit);
+router.put("/updateunit/:id",Auth.AuthAdmin, brandController.UpdateUnit);
 
 module.exports = router;

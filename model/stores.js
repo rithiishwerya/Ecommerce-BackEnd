@@ -7,8 +7,6 @@ var stores = new Schema({
     phoneNumber: { type: Number, default: "", required:true},
     address: { type: String, default: "", required:true},
     status: { type: Number, default: 0, required:false},      //0 active, 1 inactive
-    createdAt: { type: Date, default: "", required:false},
-    createdBy: { type: String, default: "", required:false},
     updatedAt: { type: Date, default: new Date(), required:false},
     updatedBy: { type: String, default: "", required:false},
 },
@@ -17,6 +15,6 @@ var stores = new Schema({
 }
 )
 
-module.exports = mongoose.model('area', stores);
+module.exports = mongoose.model('storearea', stores);
   
 

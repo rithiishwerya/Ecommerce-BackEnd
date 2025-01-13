@@ -17,8 +17,6 @@ const childcategory = new Schema ({
 },
 {
   timestamps :{createdAt:'createdAt' , updatedAt:'updatedAt'}
-
-
 })
 childcategory.pre('save',function(){
   this.id = this._id
